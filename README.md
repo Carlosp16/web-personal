@@ -16,3 +16,4 @@ Personal portfolio website built with vanilla HTML, CSS and JavaScript.
 
 Pure HTML · CSS · JavaScript — no frameworks, no dependencies.
 
+
