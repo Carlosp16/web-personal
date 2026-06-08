@@ -68,6 +68,14 @@
     }
     .nav-links a:hover { color: var(--accent); }
 
+    /* ── STARFIELD CANVAS ── */
+    #starfield {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     /* ── HERO ── */
     #hero {
       position: relative;
@@ -678,6 +686,7 @@
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="starfield"></canvas>
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-grid" id="heroGrid"></div>
   <div class="orb orb-1"></div>
@@ -1008,6 +1017,119 @@
 </footer>
 
 <script>
+  // ── STARFIELD ──
+  (function() {
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    const STAR_COUNT = 280;
+    const SPEED_BASE = 0.6;
+    let W, H, cx, cy;
+    let mouse = { x: 0, y: 0 };
+    let stars = [];
+
+    function resize() {
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      cx = W / 2; cy = H / 2;
+    }
+
+    function Star() {
+      this.reset = function(born) {
+        this.x = (Math.random() - 0.5) * W;
+        this.y = (Math.random() - 0.5) * H;
+        this.z = born ? Math.random() * W : W;
+        this.pz = this.z;
+      };
+      this.reset(true);
+    }
+
+    function init() {
+      stars = Array.from({ length: STAR_COUNT }, () => new Star());
+    }
+
+    // Scroll speed boost
+    let scrollSpeed = 0;
+    let lastSY = 0;
+    window.addEventListener('scroll', () => {
+      const sy = window.scrollY;
+      scrollSpeed = Math.min(Math.abs(sy - lastSY) * 0.3, 8);
+      lastSY = sy;
+    }, { passive: true });
+
+    window.addEventListener('mousemove', e => {
+      mouse.x = (e.clientX - W / 2) / W;
+      mouse.y = (e.clientY - H / 2) / H;
+    });
+
+    function draw() {
+      requestAnimationFrame(draw);
+
+      const speed = SPEED_BASE + scrollSpeed;
+      scrollSpeed *= 0.92; // decay
+
+      ctx.fillStyle = 'rgba(10,10,15,0.25)';
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle mouse offset on center
+      const ox = mouse.x * 15;
+      const oy = mouse.y * 15;
+
+      for (let s of stars) {
+        s.pz = s.z;
+        s.z -= speed;
+
+        if (s.z <= 0) { s.reset(false); continue; }
+
+        const px = (s.x / s.z) * W + cx + ox;
+        const py = (s.y / s.z) * H + cy + oy;
+        const ppx = (s.x / s.pz) * W + cx + ox;
+        const ppy = (s.y / s.pz) * H + cy + oy;
+
+        const size = Math.max(0.3, (1 - s.z / W) * 2.5);
+        const brightness = 1 - s.z / W;
+        const alpha = Math.min(1, brightness * 1.4);
+
+        // Trail
+        ctx.beginPath();
+        ctx.moveTo(ppx, ppy);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = `rgba(${lerp(150,255,brightness)},${lerp(180,255,brightness)},${lerp(220,255,brightness)},${alpha * 0.7})`;
+        ctx.lineWidth = size * 0.6;
+        ctx.stroke();
+
+        // Star dot
+        ctx.beginPath();
+        ctx.arc(px, py, size * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,230,255,${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas.parentElement);
+    resize();
+    init();
+    draw();
+  })();
+
+  // ── MOUSE PARALLAX ON HERO CONTENT ──
+  (function() {
+    const content = document.querySelector('.hero-content');
+    const orbs = document.querySelectorAll('.orb');
+    window.addEventListener('mousemove', e => {
+      if (window.scrollY > window.innerHeight) return;
+      const mx = (e.clientX / window.innerWidth  - 0.5);
+      const my = (e.clientY / window.innerHeight - 0.5);
+      content.style.transform = `translate(${mx * 12}px, ${my * 8}px)`;
+      orbs.forEach((o, i) => {
+        const d = (i + 1) * 18;
+        o.style.transform = `translate(${mx * d}px, ${my * d}px)`;
+      });
+    });
+  })();
+
   // ── PARALLAX ──
   const parallaxEls = document.querySelectorAll('[data-parallax]');
   const heroBg = document.getElementById('heroBg');
