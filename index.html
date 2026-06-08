@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carlos Pereira — Software Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0f0f1a;
+      --bg3: #13131f;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --accent3: #06b6d4;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: rgba(255,255,255,0.07);
+      --card: rgba(255,255,255,0.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,229,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,58,237,0.1) 0%, transparent 50%),
+        var(--bg);
+      will-change: transform;
+    }
+
+    /* Animated grid */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      will-change: transform;
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      will-change: transform;
+      animation: float linear infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent2); top: -100px; right: -100px; animation-duration: 20s; }
+    .orb-2 { width: 300px; height: 300px; background: var(--accent); bottom: 0; left: -50px; animation-duration: 15s; }
+    .orb-3 { width: 200px; height: 200px; background: #06b6d4; top: 40%; left: 40%; animation-duration: 25s; }
+
+    @keyframes float {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(30px, -20px) scale(1.05); }
+      66%  { transform: translate(-20px, 30px) scale(0.95); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      letter-spacing: 0.08em;
+    }
+    .hero-tag::before { content: '▶'; font-size: 0.6rem; }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,229,255,0.5);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .hero-meta-item svg { color: var(--accent); flex-shrink: 0; }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    /* ── SECTION BASE ── */
+    section { position: relative; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 7rem 2rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 500px;
+      margin-bottom: 4rem;
+      line-height: 1.7;
+    }
+
+    /* ── PARALLAX DIVIDER ── */
+    .parallax-divider {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .parallax-divider-bg {
+      position: absolute;
+      inset: -50%;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(0,229,255,0.08) 100%);
+      will-change: transform;
+    }
+    .parallax-divider-content {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p strong { color: var(--text); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px); border-color: rgba(0,229,255,0.2); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg3); }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3.5rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.45rem;
+      top: 0.4rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg3);
+      box-shadow: 0 0 12px rgba(0,229,255,0.6);
+    }
+    .timeline-dot.purple { background: var(--accent2); box-shadow: 0 0 12px rgba(124,58,237,0.6); }
+
+    .timeline-date {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+    .timeline-card:hover {
+      border-color: rgba(0,229,255,0.2);
+      transform: translateX(4px);
+    }
+
+    .timeline-role {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-company {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .timeline-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      font-family: 'Fira Code', monospace;
+      color: var(--accent);
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.15);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+    }
+    .tag.purple { color: #a78bfa; background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.2); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .skills-group-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .skill-item {
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease;
+    }
+    .skill-item.visible { opacity: 1; transform: translateY(0); }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .skill-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .skill-pct { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--accent); }
+
+    .skill-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* soft skills as bubbles */
+    .soft-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .soft-skill {
+      padding: 0.6rem 1.2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: all 0.2s;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.4s ease;
+    }
+    .soft-skill.visible { opacity: 1; transform: scale(1); }
+    .soft-skill:hover {
+      border-color: var(--accent2);
+      color: #a78bfa;
+      background: rgba(124,58,237,0.08);
+    }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--bg3); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.2rem;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .edu-card.visible { opacity: 1; transform: translateY(0); }
+    .edu-card:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-4px); }
+
+    .edu-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(124,58,237,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .edu-degree { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .edu-school { font-size: 0.85rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.5rem; }
+    .edu-years { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
+    .edu-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+
+    .contact-inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-cards {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .contact-card svg { color: var(--accent); }
+    .contact-card:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,229,255,0.1);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer span { font-family: 'Fira Code', monospace; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .skills-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">cp.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Formación</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grid" id="heroGrid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Disponible para nuevos proyectos</div>
+    <h1 class="hero-name">Carlos Pereira</h1>
+    <p class="hero-title">
+      <span>Software Developer</span> &nbsp;·&nbsp; Madrid, España
+    </p>
+    <p class="hero-desc">
+      Desarrollador Full Stack apasionado por crear experiencias digitales impactantes.
+      Especializado en Web Development, desde el frontend hasta el backend,
+      con foco en rendimiento y diseño responsive.
+    </p>
+    <div class="hero-ctas">
+      <a href="#experience" class="btn-primary">
+        Ver experiencia
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn-secondary">
+        Contactar
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Madrid, España
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Minsait
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER 1 -->
+<div class="parallax-divider">
+  <div class="parallax-divider-bg" data-parallax="0.3"></div>
+  <div class="parallax-divider-content" data-parallax="-0.2">
+    SOFTWARE DEVELOPER · FULL STACK · WEB
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">Sobre mí</div>
+        <h2 class="section-title">Construyo cosas para la web</h2>
+        <p>Soy un <strong>Software Developer Full Stack</strong> con experiencia en desarrollo web frontend y backend. Mi carrera comenzó en Venezuela, donde estudié Computación en la <strong>Universidad Central de Venezuela</strong> y trabajé en proyectos de desarrollo web.</p>
+        <p>Actualmente formo parte del equipo de <strong>Minsait</strong> en Madrid, donde sigo creciendo como profesional. Me apasiona aprender nuevas tecnologías y construir soluciones que generen impacto real.</p>
+        <p>Fui organizador de las <strong>JOINCIC</strong> (Jornadas de Ingeniería en Ciencias de la Computación), lo que refleja mi compromiso con la comunidad tecnológica.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-value">10+</div>
+          <div class="stat-label">Años de experiencia</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">15+</div>
+          <div class="stat-label">Tecnologías dominadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Países trabajados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Ganas de aprender</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER 2 -->
+<div class="parallax-divider">
+  <div class="parallax-divider-bg" data-parallax="0.4" style="background: linear-gradient(135deg, rgba(0,229,255,0.1) 0%, rgba(124,58,237,0.12) 100%);"></div>
+  <div class="parallax-divider-content" data-parallax="-0.15">
+    MINSAIT · DELTATECH · UCV · MADRID
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label reveal">Experiencia</div>
+    <h2 class="section-title reveal">Trayectoria profesional</h2>
+    <p class="section-subtitle reveal">Cada rol ha sumado una nueva capa a mi stack de conocimiento.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2015 — Presente</div>
+        <div class="timeline-card">
+          <div class="timeline-role">Software Developer</div>
+          <div class="timeline-company">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Minsait · Madrid, España
+          </div>
+          <p class="timeline-desc">
+            Desarrollo de soluciones tecnológicas para clientes del sector empresarial.
+            Trabajo en equipo en proyectos de transformación digital, aplicando metodologías
+            ágiles y las mejores prácticas de la industria.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag">Full Stack</span>
+            <span class="tag">Agile</span>
+            <span class="tag">Enterprise</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot purple"></div>
+        <div class="timeline-date">Mayo 2015</div>
+        <div class="timeline-card">
+          <div class="timeline-role">Analista Programador Junior</div>
+          <div class="timeline-company">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Deltatech Sistemas GK C.A. · Venezuela
+          </div>
+          <p class="timeline-desc">
+            Desarrollo de aplicaciones web en el stack completo (Frontend y Backend).
+            Diseño web responsive para múltiples dispositivos.
+            Implementación de estrategias de posicionamiento SEO para clientes.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag">Frontend</span>
+            <span class="tag">Backend</span>
+            <span class="tag">Responsive Design</span>
+            <span class="tag purple">SEO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot purple"></div>
+        <div class="timeline-date">2013</div>
+        <div class="timeline-card">
+          <div class="timeline-role">Organizador — JOINCIC</div>
+          <div class="timeline-company">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Jornadas de Ingeniería en Ciencias de la Computación · UCV
+          </div>
+          <p class="timeline-desc">
+            Organización de eventos tecnológicos universitarios, fomentando el intercambio
+            de conocimiento y el desarrollo de la comunidad de computación en Venezuela.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag purple">Liderazgo</span>
+            <span class="tag purple">Comunidad</span>
+            <span class="tag purple">Organización</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER 3 -->
+<div class="parallax-divider">
+  <div class="parallax-divider-bg" data-parallax="0.25" style="background: linear-gradient(45deg, rgba(6,182,212,0.08) 0%, rgba(124,58,237,0.12) 100%);"></div>
+  <div class="parallax-divider-content" data-parallax="-0.1">
+    HTML · CSS · JS · PHP · JAVA · SQL · LINUX
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label reveal">Skills</div>
+    <h2 class="section-title reveal">Stack tecnológico</h2>
+    <p class="section-subtitle reveal">Herramientas y tecnologías con las que construyo soluciones.</p>
+
+    <div class="skills-grid">
+      <div>
+        <div class="skills-group-title">// Tecnologías</div>
+
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">JavaScript / jQuery</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">PHP / CakePHP</span><span class="skill-pct">82%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Java</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Bases de Datos (SQL)</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">C++ / Linux</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Backbone.js / UML</span><span class="skill-pct">68%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="68"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Adobe Photoshop</span><span class="skill-pct">78%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skills-group-title">// Habilidades profesionales</div>
+        <div class="soft-skills">
+          <span class="soft-skill">Trabajo en equipo</span>
+          <span class="soft-skill">Innovación</span>
+          <span class="soft-skill">Responsabilidad</span>
+          <span class="soft-skill">Ética</span>
+          <span class="soft-skill">Aprendizaje continuo</span>
+          <span class="soft-skill">Proactividad</span>
+          <span class="soft-skill">SEO</span>
+          <span class="soft-skill">Diseño Responsive</span>
+          <span class="soft-skill">Web Security</span>
+          <span class="soft-skill">Metodologías Ágiles</span>
+          <span class="soft-skill">Resolución de problemas</span>
+          <span class="soft-skill">Puntualidad</span>
+        </div>
+
+        <div style="margin-top: 3rem;">
+          <div class="skills-group-title">// Idiomas</div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Español</span><span class="skill-pct">Nativo</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="100"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Inglés</span><span class="skill-pct">Intermedio</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+          <div class="skills-group-title">// Certificaciones</div>
+          <div class="timeline-card" style="margin-top: 0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <div style="font-size:1.5rem;">🎨</div>
+              <div>
+                <div style="font-weight:600; font-size:0.9rem;">Adobe Photoshop CS6</div>
+                <div style="font-size:0.78rem; color:var(--muted); font-family:'Fira Code',monospace;">2013</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label reveal">Formación</div>
+    <h2 class="section-title reveal">Educación</h2>
+    <p class="section-subtitle reveal">La base académica que sostiene mi práctica profesional.</p>
+
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">Licenciatura en Computación</div>
+        <div class="edu-school">Universidad Central de Venezuela</div>
+        <div class="edu-years">2009 — Presente</div>
+        <p class="edu-desc">Especialización en Bases de Datos y Aplicaciones Web. Materias complementarias en ética en ciencia y tecnología.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📚</div>
+        <div class="edu-degree">Bachiller en Ciencias</div>
+        <div class="edu-school">U.E. Nuestra Señora del Camino</div>
+        <div class="edu-years">2009</div>
+        <p class="edu-desc">Formación integral con valores. Desarrollo de competencias en inglés y pensamiento científico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content:center;">Contacto</div>
+      <h2 class="section-title">¿Hablamos?</h2>
+      <p class="section-subtitle" style="margin: 0 auto 0; text-align:center;">
+        Abierto a nuevas oportunidades y colaboraciones.
+        No dudes en escribirme.
+      </p>
+      <div class="contact-cards">
+        <a href="mailto:cpereira379@gmail.com" class="contact-card">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          cpereira379@gmail.com
+        </a>
+        <a href="https://linkedin.com/in/carlospereiraucv" target="_blank" class="contact-card">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Carlos Pereira</span>
+  <span>Diseñado con ♥ · <a href="https://linkedin.com/in/carlospereiraucv">LinkedIn</a></span>
+  <span>Madrid, España 🇪🇸</span>
+</footer>
+
+<script>
+  // ── PARALLAX ──
+  const parallaxEls = document.querySelectorAll('[data-parallax]');
+  const heroBg = document.getElementById('heroBg');
+  const heroGrid = document.getElementById('heroGrid');
+
+  function onScroll() {
+    const sy = window.scrollY;
+
+    // Hero parallax
+    heroBg.style.transform = `translateY(${sy * 0.4}px)`;
+    heroGrid.style.transform = `translateY(${sy * 0.2}px)`;
+
+    // Generic parallax dividers
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax);
+      const rect = el.parentElement.getBoundingClientRect();
+      const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+      el.style.transform = `translateY(${offset}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── INTERSECTION OBSERVER (reveal + skill bars) ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+
+        // Animate skill bars
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(
+    '.reveal, .timeline-item, .skill-item, .soft-skill, .edu-card'
+  ).forEach(el => observer.observe(el));
+
+  // Stagger skill items
+  document.querySelectorAll('.skill-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+  document.querySelectorAll('.soft-skill').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.05}s`;
+  });
+  document.querySelectorAll('.edu-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.15}s`;
+  });
+
+  // ── NAV shrink on scroll ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.padding = window.scrollY > 50 ? '0.8rem 3rem' : '1.2rem 3rem';
+  }, { passive: true });
+</script>
+</body>
+</html>
