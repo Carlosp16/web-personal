@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Carlos Pereira — Software Developer</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0f'/><rect width='64' height='64' rx='14' fill='url(%23g)' opacity='.8'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2300e5ff' stop-opacity='.3'/><stop offset='1' stop-color='%237c3aed' stop-opacity='.4'/></linearGradient></defs><text x='32' y='43' font-family='Arial Black,sans-serif' font-size='28' font-weight='900' fill='%2300e5ff' text-anchor='middle'>cp</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0f'/><rect width='64' height='64' rx='14' fill='url(%23g)' opacity='.8'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%233b82f6' stop-opacity='.3'/><stop offset='1' stop-color='%231d4ed8' stop-opacity='.4'/></linearGradient></defs><text x='32' y='43' font-family='Arial Black,sans-serif' font-size='28' font-weight='900' fill='%233b82f6' text-anchor='middle'>cp</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,9 +13,10 @@
       --bg: #0a0a0f;
       --bg2: #0f0f1a;
       --bg3: #13131f;
-      --accent: #00e5ff;
-      --accent2: #7c3aed;
-      --accent3: #06b6d4;
+      --accent: #3b82f6;
+      --accent2: #1d4ed8;
+      --accent3: #60a5fa;
+      --warm: #93c5fd;
       --text: #e2e8f0;
       --muted: #64748b;
       --border: rgba(255,255,255,0.07);
@@ -95,8 +96,8 @@
       inset: 0;
       z-index: 2;
       background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,229,255,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,58,237,0.08) 0%, transparent 50%);
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(29,78,216,0.08) 0%, transparent 50%);
       will-change: transform;
     }
 
@@ -106,8 +107,8 @@
       inset: 0;
       z-index: 3;
       background-image:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
       background-size: 60px 60px;
       will-change: transform;
     }
@@ -124,7 +125,7 @@
     }
     .orb-1 { width: 500px; height: 500px; background: var(--accent2); top: -100px; right: -100px; animation-duration: 20s; }
     .orb-2 { width: 300px; height: 300px; background: var(--accent); bottom: 0; left: -50px; animation-duration: 15s; }
-    .orb-3 { width: 200px; height: 200px; background: #06b6d4; top: 40%; left: 40%; animation-duration: 25s; }
+    .orb-3 { width: 200px; height: 200px; background: var(--accent3); top: 40%; left: 40%; animation-duration: 25s; }
 
     @keyframes float {
       0%   { transform: translate(0, 0) scale(1); }
@@ -147,8 +148,8 @@
       font-family: 'Fira Code', monospace;
       font-size: 0.8rem;
       color: var(--accent);
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.2);
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.2);
       padding: 0.4rem 1rem;
       border-radius: 100px;
       margin-bottom: 2rem;
@@ -161,7 +162,7 @@
       font-weight: 900;
       line-height: 1.05;
       letter-spacing: -0.03em;
-      background: linear-gradient(90deg, #fff, #00e5ff, #7c3aed, #06b6d4, #fff);
+      background: linear-gradient(90deg, #fff, #3b82f6, #1d4ed8, #60a5fa, #fff);
       background-size: 300% 100%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -215,11 +216,11 @@
       text-decoration: none;
       letter-spacing: 0.02em;
       transition: all 0.2s;
-      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+      box-shadow: 0 0 30px rgba(59,130,246,0.3);
     }
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 50px rgba(0,229,255,0.5);
+      box-shadow: 0 0 50px rgba(59,130,246,0.5);
     }
 
     .btn-secondary {
@@ -342,7 +343,7 @@
     .parallax-divider-bg {
       position: absolute;
       inset: -50%;
-      background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(0,229,255,0.08) 100%);
+      background: linear-gradient(135deg, rgba(29,78,216,0.15) 0%, rgba(59,130,246,0.08) 100%);
       will-change: transform;
     }
     .parallax-divider-content {
@@ -397,7 +398,7 @@
       opacity: 0;
       transition: opacity 0.3s;
     }
-    .stat-card:hover { transform: translateY(-4px); border-color: rgba(0,229,255,0.2); }
+    .stat-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.2); }
     .stat-card:hover::before { opacity: 1; }
     .stat-value {
       font-size: 2.5rem;
@@ -441,9 +442,9 @@
       border-radius: 50%;
       background: var(--accent);
       border: 2px solid var(--bg3);
-      box-shadow: 0 0 12px rgba(0,229,255,0.6);
+      box-shadow: 0 0 12px rgba(59,130,246,0.6);
     }
-    .timeline-dot.purple { background: var(--accent2); box-shadow: 0 0 12px rgba(124,58,237,0.6); }
+    .timeline-dot.purple { background: var(--accent2); box-shadow: 0 0 12px rgba(29,78,216,0.6); }
 
     .timeline-date {
       font-family: 'Fira Code', monospace;
@@ -461,7 +462,7 @@
       transition: all 0.3s;
     }
     .timeline-card:hover {
-      border-color: rgba(0,229,255,0.2);
+      border-color: rgba(59,130,246,0.2);
       transform: translateX(4px);
     }
 
@@ -498,12 +499,12 @@
       font-size: 0.72rem;
       font-family: 'Fira Code', monospace;
       color: var(--accent);
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.15);
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.15);
       padding: 0.25rem 0.7rem;
       border-radius: 100px;
     }
-    .tag.purple { color: #a78bfa; background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.2); }
+    .tag.purple { color: var(--warm); background: rgba(29,78,216,0.1); border-color: rgba(29,78,216,0.2); }
 
     /* ── SKILLS ── */
     #skills { background: var(--bg2); }
@@ -523,36 +524,75 @@
       font-family: 'Fira Code', monospace;
     }
 
-    .skill-item {
-      margin-bottom: 1.4rem;
+    /* skill level groups (replaces old percentage bars) */
+    .skill-level-group { margin-bottom: 1.8rem; }
+    .skill-level-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.8rem;
+    }
+    .skill-level-title::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .skill-level-group.level-2 .skill-level-title::before { background: var(--accent2); }
+    .skill-level-group.level-3 .skill-level-title::before { background: var(--muted); }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .skill-chip {
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.45rem 0.9rem;
+      border-radius: 100px;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.4s ease;
+    }
+    .skill-chip.visible { opacity: 1; transform: scale(1); }
+    .skill-chip.level-1 {
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.35);
+      color: var(--accent);
+    }
+    .skill-chip.level-2 {
+      background: rgba(29,78,216,0.08);
+      border: 1px solid rgba(29,78,216,0.25);
+      color: var(--warm);
+    }
+    .skill-chip.level-3 {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .lang-rows { display: flex; flex-direction: column; gap: 0.7rem; }
+    .lang-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.5s ease;
     }
-    .skill-item.visible { opacity: 1; transform: translateY(0); }
-
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .skill-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
-    .skill-pct { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--accent); }
-
-    .skill-bar {
-      height: 4px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .skill-fill {
-      height: 100%;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--accent2), var(--accent));
-      width: 0;
-      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .lang-row.visible { opacity: 1; transform: translateY(0); }
+    .lang-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .lang-level { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--accent); }
 
     /* soft skills as bubbles */
     .soft-skills {
@@ -575,8 +615,8 @@
     .soft-skill.visible { opacity: 1; transform: scale(1); }
     .soft-skill:hover {
       border-color: var(--accent2);
-      color: #a78bfa;
-      background: rgba(124,58,237,0.08);
+      color: var(--warm);
+      background: rgba(29,78,216,0.08);
     }
 
     /* ── EDUCATION ── */
@@ -598,14 +638,14 @@
       transform: translateY(20px);
     }
     .edu-card.visible { opacity: 1; transform: translateY(0); }
-    .edu-card:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-4px); }
+    .edu-card:hover { border-color: rgba(29,78,216,0.3); transform: translateY(-4px); }
 
     .edu-icon {
       width: 48px; height: 48px;
       border-radius: 12px;
-      background: rgba(124,58,237,0.15);
+      background: rgba(29,78,216,0.15);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
+      color: var(--accent2);
       margin-bottom: 1.2rem;
     }
     .edu-degree { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
@@ -648,7 +688,7 @@
       border-color: var(--accent);
       color: var(--accent);
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0,229,255,0.1);
+      box-shadow: 0 10px 30px rgba(59,130,246,0.1);
     }
 
     /* ── FOOTER ── */
@@ -788,7 +828,7 @@
 
 <!-- PARALLAX DIVIDER 2 -->
 <div class="parallax-divider">
-  <div class="parallax-divider-bg" data-parallax="0.4" style="background: linear-gradient(135deg, rgba(0,229,255,0.1) 0%, rgba(124,58,237,0.12) 100%);"></div>
+  <div class="parallax-divider-bg" data-parallax="0.4" style="background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(29,78,216,0.12) 100%);"></div>
   <div class="parallax-divider-content" data-parallax="-0.15">
     MINSAIT · DELTATECH · UCV · MADRID
   </div>
@@ -963,7 +1003,7 @@
 
 <!-- PARALLAX DIVIDER 3 -->
 <div class="parallax-divider">
-  <div class="parallax-divider-bg" data-parallax="0.25" style="background: linear-gradient(45deg, rgba(6,182,212,0.08) 0%, rgba(124,58,237,0.12) 100%);"></div>
+  <div class="parallax-divider-bg" data-parallax="0.25" style="background: linear-gradient(45deg, rgba(96,165,250,0.08) 0%, rgba(29,78,216,0.12) 100%);"></div>
   <div class="parallax-divider-content" data-parallax="-0.1">
     HTML · CSS · JS · PHP · JAVA · SQL · LINUX
   </div>
@@ -980,37 +1020,30 @@
       <div>
         <div class="skills-group-title">// Tecnologías</div>
 
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">95%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+        <div class="skill-level-group level-1">
+          <div class="skill-level-title">Dominio diario</div>
+          <div class="skill-chips">
+            <span class="skill-chip level-1">HTML / CSS</span>
+            <span class="skill-chip level-1">JavaScript / jQuery</span>
+          </div>
         </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">JavaScript / jQuery</span><span class="skill-pct">88%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+
+        <div class="skill-level-group level-2">
+          <div class="skill-level-title">Cómodo</div>
+          <div class="skill-chips">
+            <span class="skill-chip level-2">PHP / CakePHP</span>
+            <span class="skill-chip level-2">Bases de Datos (SQL)</span>
+            <span class="skill-chip level-2">Java</span>
+            <span class="skill-chip level-2">Adobe Photoshop</span>
+          </div>
         </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">PHP / CakePHP</span><span class="skill-pct">82%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">Java</span><span class="skill-pct">75%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">Bases de Datos (SQL)</span><span class="skill-pct">80%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">C++ / Linux</span><span class="skill-pct">70%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">Backbone.js / UML</span><span class="skill-pct">68%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="68"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span class="skill-name">Adobe Photoshop</span><span class="skill-pct">78%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+
+        <div class="skill-level-group level-3">
+          <div class="skill-level-title">Básico</div>
+          <div class="skill-chips">
+            <span class="skill-chip level-3">C++ / Linux</span>
+            <span class="skill-chip level-3">Backbone.js / UML</span>
+          </div>
         </div>
       </div>
 
@@ -1033,13 +1066,15 @@
 
         <div style="margin-top: 3rem;">
           <div class="skills-group-title">// Idiomas</div>
-          <div class="skill-item">
-            <div class="skill-header"><span class="skill-name">Español</span><span class="skill-pct">Nativo</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-width="100"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-header"><span class="skill-name">Inglés</span><span class="skill-pct">Intermedio</span></div>
-            <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+          <div class="lang-rows">
+            <div class="lang-row">
+              <span class="lang-name">Español</span>
+              <span class="lang-level">Nativo</span>
+            </div>
+            <div class="lang-row">
+              <span class="lang-name">Inglés</span>
+              <span class="lang-level">Intermedio</span>
+            </div>
           </div>
         </div>
 
@@ -1047,7 +1082,9 @@
           <div class="skills-group-title">// Certificaciones</div>
           <div class="timeline-card" style="margin-top: 0.5rem;">
             <div style="display:flex; align-items:center; gap:0.75rem;">
-              <div style="font-size:1.5rem;">🎨</div>
+              <div style="color: var(--accent); flex-shrink:0;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+              </div>
               <div>
                 <div style="font-weight:600; font-size:0.9rem;">Adobe Photoshop CS6</div>
                 <div style="font-size:0.78rem; color:var(--muted); font-family:'Fira Code',monospace;">2013</div>
@@ -1069,13 +1106,17 @@
 
     <div class="edu-grid">
       <div class="edu-card">
-        <div class="edu-icon">🎓</div>
+        <div class="edu-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg>
+        </div>
         <div class="edu-degree">Licenciatura en Computación</div>
         <div class="edu-school">Universidad Central de Venezuela</div>
         <p class="edu-desc">Especialización en Bases de Datos y Aplicaciones Web. Materias complementarias en ética en ciencia y tecnología.</p>
       </div>
       <div class="edu-card">
-        <div class="edu-icon">📚</div>
+        <div class="edu-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
         <div class="edu-degree">Bachiller en Ciencias</div>
         <div class="edu-school">U.E. Nuestra Señora del Camino</div>
         <p class="edu-desc">Formación integral con valores. Desarrollo de competencias en inglés y pensamiento científico.</p>
@@ -1200,14 +1241,14 @@
         ctx.beginPath();
         ctx.moveTo(ppx, ppy);
         ctx.lineTo(px, py);
-        ctx.strokeStyle = `rgba(${lerp(150,255,brightness)},${lerp(180,255,brightness)},${lerp(220,255,brightness)},${alpha * 0.7})`;
+        ctx.strokeStyle = `rgba(${lerp(180,255,brightness)},${lerp(210,235,brightness)},${lerp(255,255,brightness)},${alpha * 0.7})`;
         ctx.lineWidth = size * 0.6;
         ctx.stroke();
 
         // Star dot
         ctx.beginPath();
         ctx.arc(px, py, size * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,230,255,${alpha})`;
+        ctx.fillStyle = `rgba(200,225,255,${alpha})`;
         ctx.fill();
       }
     }
@@ -1260,35 +1301,32 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // ── INTERSECTION OBSERVER (reveal + skill bars) ──
+  // ── INTERSECTION OBSERVER (reveal + skill chips) ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-
-        // Animate skill bars
-        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
-          bar.style.width = bar.dataset.width + '%';
-        });
-
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15 });
 
   document.querySelectorAll(
-    '.reveal, .timeline-item, .skill-item, .soft-skill, .edu-card'
+    '.reveal, .timeline-item, .skill-chip, .soft-skill, .edu-card, .lang-row'
   ).forEach(el => observer.observe(el));
 
-  // Stagger skill items
-  document.querySelectorAll('.skill-item').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.07}s`;
+  // Stagger skill chips
+  document.querySelectorAll('.skill-chip').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.06}s`;
   });
   document.querySelectorAll('.soft-skill').forEach((el, i) => {
     el.style.transitionDelay = `${i * 0.05}s`;
   });
   document.querySelectorAll('.edu-card').forEach((el, i) => {
     el.style.transitionDelay = `${i * 0.15}s`;
+  });
+  document.querySelectorAll('.lang-row').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.1}s`;
   });
 
   // ── NAV shrink on scroll ──
