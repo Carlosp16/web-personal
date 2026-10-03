@@ -358,27 +358,7 @@
     }
 
     /* ── ABOUT ── */
-    #about { background: var(--bg2); overflow: hidden; }
-
-    /* ── MATRIX RAIN (about) ── */
-    #matrixRain {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.5;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
-              mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
-    }
-    #about .section-inner { position: relative; z-index: 1; }
-    #about .about-text { text-shadow: 0 0 12px var(--bg2), 0 0 4px var(--bg2); }
-    #about .stat-card {
-      background: rgba(15,15,26,0.72);
-      -webkit-backdrop-filter: blur(6px);
-              backdrop-filter: blur(6px);
-    }
+    #about { background: var(--bg2); }
 
     .about-grid {
       display: grid;
@@ -430,7 +410,25 @@
     .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
 
     /* ── EXPERIENCE ── */
-    #experience { background: var(--bg3); }
+    #experience { background: var(--bg3); overflow: hidden; }
+
+    /* ── MATRIX RAIN (experience) ── */
+    #matrixRain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
+              mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
+    }
+    #experience .section-inner { position: relative; z-index: 1; }
+    #experience .section-title,
+    #experience .section-subtitle,
+    #experience .timeline-date { text-shadow: 0 0 12px var(--bg3), 0 0 4px var(--bg3); }
+    #experience .timeline-card { background: rgba(19,19,31,0.86); }
 
     .timeline {
       position: relative;
@@ -815,7 +813,6 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <canvas id="matrixRain" aria-hidden="true"></canvas>
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-text reveal">
@@ -857,6 +854,7 @@
 
 <!-- EXPERIENCE -->
 <section id="experience">
+  <canvas id="matrixRain" aria-hidden="true"></canvas>
   <div class="section-inner">
     <div class="section-label reveal">Experiencia</div>
     <h2 class="section-title reveal">Trayectoria profesional</h2>
@@ -1186,7 +1184,7 @@
 </footer>
 
 <script>
-  // ── MATRIX RAIN (about) ──
+  // ── MATRIX RAIN (experience) ──
   (function() {
     const canvas = document.getElementById('matrixRain');
     if (!canvas) return;
@@ -1194,11 +1192,13 @@
     const ctx = canvas.getContext('2d');
     const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789<>/{}[]=+*;';
     const FRAME_MS = 60;                    // ~16 fps, ritmo de "lluvia"
-    const TRAIL = 'rgba(15,15,26,0.09)';    // --bg2 con alfa: deja la estela
+    const TRAIL = 'rgba(19,19,31,0.09)';    // --bg3 con alfa: deja la estela
     const css = getComputedStyle(document.documentElement);
     const ACCENT = (css.getPropertyValue('--accent') || '#3b82f6').trim();
-    const BG = (css.getPropertyValue('--bg2') || '#0f0f1a').trim();
+    const BG = (css.getPropertyValue('--bg3') || '#13131f').trim();
     const HEAD = '#dbeafe';                 // cabeza de la gota, azul casi blanco
+    const DROP_EVERY = 45;                  // filas por gota: mantiene la densidad en secciones altas
+    const MAX_PIXELS = 5e6;                 // tope del lienzo para no cargar la GPU
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let W = 0, H = 0, size = 16, rows = 0, cols = [];
     let running = false, visible = false, last = 0, rafId = 0;
@@ -1209,7 +1209,7 @@
       const w = section.clientWidth, h = section.clientHeight;
       if (w === W && h === H) return;
       W = w; H = h;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2, Math.sqrt(MAX_PIXELS / (W * H || 1)));
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1218,7 +1218,10 @@
       ctx.font = size + "px 'Fira Code', monospace";
       ctx.textBaseline = 'top';
       ctx.textAlign = 'center';
-      cols = Array.from({ length: Math.ceil(W / size) }, () => ({
+      const nCols = Math.ceil(W / size);
+      const perCol = Math.max(1, Math.round(rows / DROP_EVERY));
+      cols = Array.from({ length: nCols * perCol }, (_, k) => ({
+        col: k % nCols,
         y: Math.floor(Math.random() * rows * 2) - rows,  // escalonadas
         pace: 0.55 + Math.random() * 0.45,              // prob. de avanzar por frame
         ch: ''
@@ -1234,11 +1237,12 @@
       for (let i = 0; i < cols.length; i++) {
         const c = cols[i];
         if (Math.random() > c.pace) continue;
-        const x = i * size + size / 2;
+        const left = c.col * size;
+        const x = left + size / 2;
         // la cabeza anterior pasa a azul
         if (c.ch && c.y >= 0) {
           ctx.fillStyle = BG;
-          ctx.fillRect(i * size, c.y * size, size, size);
+          ctx.fillRect(left, c.y * size, size, size);
           ctx.fillStyle = ACCENT;
           ctx.fillText(c.ch, x, c.y * size);
         }
@@ -1250,6 +1254,7 @@
         }
         if (c.y > rows && Math.random() > 0.975) {
           c.y = -1 - Math.floor(Math.random() * 8);
+          c.col = (Math.random() * Math.ceil(W / size)) | 0;
           c.ch = '';
           c.pace = 0.55 + Math.random() * 0.45;
         }
