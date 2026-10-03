@@ -358,7 +358,27 @@
     }
 
     /* ── ABOUT ── */
-    #about { background: var(--bg2); }
+    #about { background: var(--bg2); overflow: hidden; }
+
+    /* ── MATRIX RAIN (about) ── */
+    #matrixRain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+              mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    }
+    #about .section-inner { position: relative; z-index: 1; }
+    #about .about-text { text-shadow: 0 0 12px var(--bg2), 0 0 4px var(--bg2); }
+    #about .stat-card {
+      background: rgba(15,15,26,0.72);
+      -webkit-backdrop-filter: blur(6px);
+              backdrop-filter: blur(6px);
+    }
 
     .about-grid {
       display: grid;
@@ -795,6 +815,7 @@
 
 <!-- ABOUT -->
 <section id="about">
+  <canvas id="matrixRain" aria-hidden="true"></canvas>
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-text reveal">
@@ -1165,6 +1186,102 @@
 </footer>
 
 <script>
+  // ── MATRIX RAIN (about) ──
+  (function() {
+    const canvas = document.getElementById('matrixRain');
+    if (!canvas) return;
+    const section = canvas.parentElement;
+    const ctx = canvas.getContext('2d');
+    const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789<>/{}[]=+*;';
+    const FRAME_MS = 60;                    // ~16 fps, ritmo de "lluvia"
+    const TRAIL = 'rgba(15,15,26,0.09)';    // --bg2 con alfa: deja la estela
+    const css = getComputedStyle(document.documentElement);
+    const ACCENT = (css.getPropertyValue('--accent') || '#3b82f6').trim();
+    const BG = (css.getPropertyValue('--bg2') || '#0f0f1a').trim();
+    const HEAD = '#dbeafe';                 // cabeza de la gota, azul casi blanco
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0, size = 16, rows = 0, cols = [];
+    let running = false, visible = false, last = 0, rafId = 0;
+
+    function randChar() { return CHARS[(Math.random() * CHARS.length) | 0]; }
+
+    function resize() {
+      const w = section.clientWidth, h = section.clientHeight;
+      if (w === W && h === H) return;
+      W = w; H = h;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      size = W < 600 ? 14 : 16;
+      rows = Math.ceil(H / size);
+      ctx.font = size + "px 'Fira Code', monospace";
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'center';
+      cols = Array.from({ length: Math.ceil(W / size) }, () => ({
+        y: Math.floor(Math.random() * rows * 2) - rows,  // escalonadas
+        pace: 0.55 + Math.random() * 0.45,              // prob. de avanzar por frame
+        ch: ''
+      }));
+      ctx.fillStyle = BG;
+      ctx.fillRect(0, 0, W, H);
+      if (reduced) { for (let i = 0; i < rows; i++) step(); }
+    }
+
+    function step() {
+      ctx.fillStyle = TRAIL;
+      ctx.fillRect(0, 0, W, H);
+      for (let i = 0; i < cols.length; i++) {
+        const c = cols[i];
+        if (Math.random() > c.pace) continue;
+        const x = i * size + size / 2;
+        // la cabeza anterior pasa a azul
+        if (c.ch && c.y >= 0) {
+          ctx.fillStyle = BG;
+          ctx.fillRect(i * size, c.y * size, size, size);
+          ctx.fillStyle = ACCENT;
+          ctx.fillText(c.ch, x, c.y * size);
+        }
+        c.y++;
+        c.ch = randChar();
+        if (c.y >= 0) {
+          ctx.fillStyle = HEAD;
+          ctx.fillText(c.ch, x, c.y * size);
+        }
+        if (c.y > rows && Math.random() > 0.975) {
+          c.y = -1 - Math.floor(Math.random() * 8);
+          c.ch = '';
+          c.pace = 0.55 + Math.random() * 0.45;
+        }
+      }
+    }
+
+    function loop(t) {
+      if (!running) return;
+      rafId = requestAnimationFrame(loop);
+      if (t - last < FRAME_MS) return;
+      last = t;
+      step();
+    }
+
+    function update() {
+      const should = visible && !reduced && !document.hidden;
+      if (should && !running) { running = true; rafId = requestAnimationFrame(loop); }
+      else if (!should && running) { running = false; cancelAnimationFrame(rafId); }
+    }
+
+    resize();
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(section);
+    else window.addEventListener('resize', resize);
+
+    // Solo anima mientras la sección está en pantalla
+    new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      update();
+    }, { rootMargin: '100px' }).observe(section);
+    document.addEventListener('visibilitychange', update);
+  })();
+
   // ── STARFIELD ──
   (function() {
     const canvas = document.getElementById('starfield');
